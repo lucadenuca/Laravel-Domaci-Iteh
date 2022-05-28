@@ -10,6 +10,14 @@ class Gradiliste extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'adresa',
+        'grad',
+        'investitor',
+        'broj_radnika',
+    ];
+
+
     public function sefovi()
     {
         return $this->hasMany(Sef::class);

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $gseed = new GradilisteSeeder;
+        $rseed = new RadnikSeeder;
+        $sseed = new SefSeeder;
+        $rseed->run();
+        $sseed->run();
+        $gseed->run();
     }
 }

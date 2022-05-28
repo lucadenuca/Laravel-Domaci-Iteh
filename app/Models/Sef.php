@@ -11,6 +11,14 @@ class Sef extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ime',
+        'prezime',
+        'firma',
+        'specijalnost',
+        'gradiliste_id'
+    ];
+
     public function gradiliste()
     {
         return $this->belongsTo(Gradiliste::class);
