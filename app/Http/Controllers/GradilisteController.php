@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GradilisteResource;
 use App\Models\Gradiliste;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GradilisteController extends Controller
 {
@@ -14,7 +16,8 @@ class GradilisteController extends Controller
      */
     public function index()
     {
-        //
+        $g = Gradiliste::all();
+        return GradilisteResource::collection($g);
     }
 
     /**
@@ -46,7 +49,7 @@ class GradilisteController extends Controller
      */
     public function show(Gradiliste $gradiliste)
     {
-        //
+        return new GradilisteResource($gradiliste);
     }
 
     /**
@@ -69,7 +72,24 @@ class GradilisteController extends Controller
      */
     public function update(Request $request, Gradiliste $gradiliste)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'adresa' => 'required|string',
+            'grad' => 'required|string',
+            'investitor' => 'required|string',
+            'broj_radnika' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $gradiliste->adresa = $request->adresa;
+        $gradiliste->grad = $request->grad;
+        $gradiliste->investitor = $request->investitor;
+        $gradiliste->broj_radnika = $request->broj_radnika;
+        $gradiliste->save();
+
+        return response()->json('Gradilište je ažurirano.');
     }
 
     /**
@@ -80,6 +100,7 @@ class GradilisteController extends Controller
      */
     public function destroy(Gradiliste $gradiliste)
     {
-        //
+        $gradiliste->delete();
+        return response()->json('Gradilište je obrisano.');
     }
 }

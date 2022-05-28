@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SefResource;
 use App\Models\Sef;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class SefController extends Controller
      */
     public function index()
     {
-        //
+        $s = Sef::all();
+        return SefResource::collection($s);
     }
 
     /**
@@ -80,6 +82,7 @@ class SefController extends Controller
      */
     public function destroy(Sef $sef)
     {
-        //
+        $sef->delete();
+        return response()->json('Šef je obrisan.');
     }
 }
