@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthentificationController;
 use App\Http\Controllers\GradilisteController;
 use App\Http\Controllers\SefController;
 use Illuminate\Http\Request;
@@ -16,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('gradiliste', GradilisteController::class);
-Route::resource('sef', SefController::class);
+Route::post('register', [AuthentificationController::class, 'register']);
+Route::post('login', [AuthentificationController::class, 'login']);
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::resource('gradiliste', GradilisteController::class);
+    Route::resource('sef', SefController::class);
+    Route::post('logout', [AuthentificationController::class, 'logout']);
 });
